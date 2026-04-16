@@ -69,6 +69,7 @@
               <ComObject Id="%AID%_O-%TT%%CC%013" Name="CH%C%_TimerFeedback" Text="" Number="%K12%" FunctionText="Timer Rückmeldung - Ausgang" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-11"/>
               <ComObject Id="%AID%_O-%TT%%CC%014" Name="CH%C%_VentModeAutomatic" Text="" Number="%K13%" FunctionText="Lüftungsmodus Automatikbetrieb - Eingang" ObjectSize="1 Byte" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Enabled" DatapointType="DPST-5-10" />
               <ComObject Id="%AID%_O-%TT%%CC%015" Name="CH%C%_VentModeFeedbackAutomatic" Text="" Number="%K14%" FunctionText="Lüftungsmodus Automatikbetrieb Rückmeldung - Ausgang" ObjectSize="1 Byte" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-5-10"/>
+              <ComObject Id="%AID%_O-%TT%%CC%016" Name="CH%C%_TachoRPM" Text="" Number="%K15%" FunctionText="Drehzahl Rückmeldung - Ausgang" ObjectSize="2 Bytes" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-7-1"/>
             </ComObjectTable>
             <ComObjectRefs>
               <!-- A ComObjecdtRef is necessary for each ComObject, ComObjectRef are used in the ETS UI -->
@@ -87,6 +88,7 @@
               <ComObjectRef Id="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" RefId="%AID%_O-%TT%%CC%013" Text="{{0:Lüfter %C%}}: Timer Rückmeldung" FunctionText="Lüfter %C%: Ausgang, Ein=1 / Aus=0" TextParameterRefId="%AID%_P-%TT%%CC%101_R-%TT%%CC%10101"/>
               <ComObjectRef Id="%AID%_O-%TT%%CC%014_R-%TT%%CC%01401" RefId="%AID%_O-%TT%%CC%014" Text="{{0:Lüfter %C%}}: Lüftungsmodus Automatikbetrieb - Eingang" FunctionText="Lüfter %C%: Eingang, WRG=0 / Zuluft=1 / Abluft=2" TextParameterRefId="%AID%_P-%TT%%CC%101_R-%TT%%CC%10101"/>
               <ComObjectRef Id="%AID%_O-%TT%%CC%015_R-%TT%%CC%01501" RefId="%AID%_O-%TT%%CC%015" Text="{{0:Lüfter %C%}}: Lüftungsmodus Automatikbetrieb Rückmeldung - Ausgang" FunctionText="Lüfter %C%: Ausgang, WRG=0 / Zuluft=1 / Abluft=2" TextParameterRefId="%AID%_P-%TT%%CC%101_R-%TT%%CC%10101"/>
+              <ComObjectRef Id="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" RefId="%AID%_O-%TT%%CC%016" Text="{{0:Lüfter %C%}}: Drehzahl (RPM)" FunctionText="Lüfter %C%: Ausgang, RPM" TextParameterRefId="%AID%_P-%TT%%CC%101_R-%TT%%CC%10101"/>
             </ComObjectRefs>
           </Static>
           <!-- Here starts the UI definition -->
@@ -104,6 +106,7 @@
                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%007_R-%TT%%CC%00701" /> <!-- Stufe Feedback -->
                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%012_R-%TT%%CC%01201" /> <!-- Timer aktivieren -->
                     <ComObjectRefRef RefId="%AID%_O-%TT%%CC%013_R-%TT%%CC%01301" /> <!-- Timerfeedback -->
+                    <ComObjectRefRef RefId="%AID%_O-%TT%%CC%016_R-%TT%%CC%01601" /> <!-- Drehzahl RPM -->
                     <choose ParamRefId="%AID%_P-%TT%%CC%004_R-%TT%%CC%00401">
                       <when test="3">
                         <ComObjectRefRef RefId="%AID%_O-%TT%%CC%010_R-%TT%%CC%01001" /> <!-- KO Lüftungsmodus, falls Auswahl durch KO selektiert -->
