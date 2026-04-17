@@ -26,7 +26,7 @@
                   <Enumeration Text="Manuell" Value="1" Id="%AID%_PT-OpMode_EN-1" />
                   <Enumeration Text="Automatik" Value="2" Id="%AID%_PT-OpMode_EN-2" />
                   <Enumeration Text="Kommunikationsobjekt" Value="3" Id="%AID%_PT-OpMode_EN-3" />
-                  <!-- 1 bit reserve -->
+                  <Enumeration Text="Vollsteuerung" Value="4" Id="%AID%_PT-OpMode_EN-4" />
                 </TypeRestriction>
               </ParameterType>
               <ParameterType Id="%AID%_PT-ControlMode" Name="ControlMode">

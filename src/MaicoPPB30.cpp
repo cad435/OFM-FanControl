@@ -42,6 +42,11 @@ void MaicoPPB30::onDirectionTimer() {
 }
 
 void MaicoPPB30::updateMode() {
+  // Full control bypasses normal step-based logic
+  if (_operatingMode == OperatingMode::FullControl) {
+    return;
+  }
+
   // Access base class protected members
   if (_operatingMode == OperatingMode::Off) {
     _fanStep = _FanSteps[0];
@@ -82,4 +87,29 @@ int16_t MaicoPPB30::getPWMLevel(int16_t fraction, int16_t base, int16_t resoluti
 void MaicoPPB30::setPWM() {
   _hw.setPWM(_S1_PWM_PIN, getPWMLevel(12 + _directionS1 * _fanStep));
   _hw.setPWM(_S2_PWM_PIN, getPWMLevel(12 + _directionS2 * _fanStep));
+}
+
+void MaicoPPB30::setFullControlPower(bool on) {
+  _hw.setDigital(_SW_PIN, on);
+}
+
+void MaicoPPB30::setFullControlSpeed(uint8_t percent) {
+  if (percent > 100) percent = 100;
+  _fullControlPercent = percent;
+  updateFullControl();
+}
+
+void MaicoPPB30::setFullControlDirection(uint8_t dir) {
+  _fullControlDirection = (dir == 0) ? 1 : -1;
+  updateFullControl();
+}
+
+uint8_t MaicoPPB30::getFullControlSpeed() {
+  return _fullControlPercent;
+}
+
+void MaicoPPB30::updateFullControl() {
+  int16_t offset = (int16_t)_fullControlPercent * 12 / 100;
+  _hw.setPWM(_S1_PWM_PIN, getPWMLevel(12 + _fullControlDirection * offset));
+  _hw.setPWM(_S2_PWM_PIN, getPWMLevel(12 + _fullControlDirection * offset));
 }

@@ -18,10 +18,17 @@ void Fan::onTimeoutTimer() {
 void Fan::setOperatingMode(OperatingMode operatingMode) {
 
   // stop fan when leaving automatic mode
-  if(operatingMode != OperatingMode::Automatic 
+  if(operatingMode != OperatingMode::Automatic
     && _operatingMode == OperatingMode::Automatic
     && !_manualOverrideActive) {
-    changeFanSpeed(0); 
+    changeFanSpeed(0);
+  }
+
+  // stop fan when leaving full control mode
+  if(operatingMode != OperatingMode::FullControl
+    && _operatingMode == OperatingMode::FullControl) {
+    setFullControlPower(false);
+    setFullControlSpeed(0);
   }
 
   _operatingMode = operatingMode;

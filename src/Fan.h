@@ -18,6 +18,7 @@ public:
     Off = 0,
     Manual = 1,
     Automatic = 2,
+    FullControl = 3,
   };
 
   enum ControlMode {
@@ -59,6 +60,12 @@ public:
   void setOutsideHumidity(float outsideRelHumidity);
   void setOutsideTemperature(float outsideTemperature);
   virtual int16_t getFanSpeed() = 0;
+
+  // Full control mode — bypass step-based control
+  virtual void setFullControlPower(bool on) = 0;
+  virtual void setFullControlSpeed(uint8_t percent) = 0;
+  virtual void setFullControlDirection(uint8_t dir) = 0;
+  virtual uint8_t getFullControlSpeed() = 0;
   VentilationMode getVentilationMode();
   static float getDewPoint(float relHumidity, float temperature);
 

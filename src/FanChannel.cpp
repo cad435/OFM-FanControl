@@ -59,6 +59,9 @@ void FanChannel::setOpMode(uint8_t opModeIdx)
     case 2:
         _fan.setOperatingMode(Fan::OperatingMode::Automatic);
         break;
+    case 4:
+        _fan.setOperatingMode(Fan::OperatingMode::FullControl);
+        break;
     default:
         break;
     }
@@ -139,12 +142,14 @@ void FanChannel::processInputKo(GroupObject& ko)
         {
             if(ParamFAN_CH_OpMode == 3)
             {
-                uint8_t opModeIdx = ko.value(DPT_Enable);
+                uint8_t opModeIdx = ko.value(DPT_Value_1_Ucount);
                 if(opModeIdx == 0)
                     _fan.setOperatingMode(Fan::OperatingMode::Manual);
                 else if(opModeIdx == 1)
                     _fan.setOperatingMode(Fan::OperatingMode::Automatic);
-                KoFAN_CH_OpModeFeedback.value(opModeIdx, DPT_Enable);
+                else if(opModeIdx == 2)
+                    _fan.setOperatingMode(Fan::OperatingMode::FullControl);
+                KoFAN_CH_OpModeFeedback.value(opModeIdx, DPT_Value_1_Ucount);
             }
             break;
         }
@@ -208,6 +213,25 @@ void FanChannel::processInputKo(GroupObject& ko)
                 int16_t timeractive = 0;
                 KoFAN_CH_TimerFeedback.value(timeractive, DPT_State);
             }
+            break;
+        }
+        case FAN_KoCH_FullControlPower:
+        {
+            bool on = ko.value(DPT_Switch);
+            _fan.setFullControlPower(on);
+            break;
+        }
+        case FAN_KoCH_FullControlSpeed:
+        {
+            uint8_t percent = ko.value(DPT_Scaling);
+            _fan.setFullControlSpeed(percent);
+            KoFAN_CH_FullControlSpeedFeedback.value(percent, DPT_Scaling);
+            break;
+        }
+        case FAN_KoCH_FullControlDirection:
+        {
+            uint8_t dir = ko.value(DPT_Switch);
+            _fan.setFullControlDirection(dir);
             break;
         }
     }
